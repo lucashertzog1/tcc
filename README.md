@@ -1,4 +1,4 @@
-- #TCC SIGE
+- # TCC SIGE
 - João Francisco Bonotto Dominguez Parcero e Lucas Malhão Hertzog
 - Sistema de atividades em inglês focado em crianças
 - Será um site/aplicativo com atividades um pouco mais simples, com a finalidade de desenvolver as habilidades na língua estrangeira
