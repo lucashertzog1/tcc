@@ -9,26 +9,13 @@ import { cn } from '@/lib/utils';
 const features = [
     {
         title: 'Aprenda Brincando',
-        description: 'Domine o inglês com jogos divertidos e interativos como Word Panda, Sentence Scramble e o Desafio de Imagem.',
+        description: 'Domine o inglês com jogos divertidos e interativos como Word Panda e Sentence Scramble.',
         icon: Gamepad2,
         color: 'text-rose-500'
     },
     {
-        title: 'Assistente de Estudos',
-        description: "Ficou com dúvida? Nosso Panda Tutor está sempre pronto para ajudar com gramática, vocabulário e muito mais!",
-        icon: BrainCircuit,
-        color: 'text-blue-500'
-
-    },
-    {
-        title: 'Acompanhe seu Progresso',
-        description: 'Ganhe Panda Points, aumente sua sequência de dias (streak) e desbloqueie conquistas ao completar atividades.',
-        icon: Trophy,
-        color: 'text-amber-500'
-    },
-     {
-        title: 'Histórias Infinitas',
-        description: 'Leia histórias sempre novas no seu nível de dificuldade. Traduza qualquer palavra com apenas um clique!',
+        title: 'Leitura Inteligente',
+        description: 'Leia histórias geradas por IA. Clique em qualquer palavra para ver a tradução e o significado no contexto.',
         icon: Wand2,
         color: 'text-violet-500'
     },
@@ -49,10 +36,10 @@ export default function LandingPage() {
                     Aprender inglês nunca foi tão divertido.
                 </h1>
                 <p className="max-w-2xl text-lg text-white/90 drop-shadow-md animate-in fade-in-0 slide-in-from-top-4 duration-1000 delay-200">
-                    Junte-se a milhares de crianças na jornada para a fluência com jogos interativos, histórias e um assistente de estudos!
+                    Junte-se à nossa comunidade e aprenda inglês com jogos interativos e histórias geradas por IA!
                 </p>
                 <Button size="lg" className={cn("mt-4 text-base font-bold px-10 py-6", primaryButtonClass)} asChild>
-                  <Link href="/dashboard">
+                  <Link href="/register">
                     Comece a Aprender (Grátis!)
                     <ArrowRight className="ml-2" />
                   </Link>
@@ -89,7 +76,7 @@ export default function LandingPage() {
                         <div className="flex flex-col items-center gap-4">
                             <div className="p-4 bg-white rounded-full text-primary shadow-md"><Gamepad2 className="w-8 h-8" /></div>
                             <h3 className="font-bold text-xl">1. Explore as Atividades</h3>
-                            <p className="text-muted-foreground">Vá para a seção "Daily Activities" e escolha um dos nossos jogos interativos.</p>
+                            <p className="text-muted-foreground">Vá para a seção "Atividades Diárias" e escolha um dos nossos jogos interativos.</p>
                         </div>
                         <div className="flex flex-col items-center gap-4">
                             <div className="p-4 bg-white rounded-full text-primary shadow-md"><Wand2 className="w-8 h-8" /></div>
@@ -105,8 +92,8 @@ export default function LandingPage() {
                         Desbloqueie um novo mundo de aprendizado de inglês hoje.
                     </p>
                     <Button size="lg" className="mt-8 text-base font-bold px-10 py-6 bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 transition-transform" asChild>
-                        <Link href="/dashboard">
-                          Ir para as atividades
+                        <Link href="/register">
+                          Criar Conta Grátis
                           <ArrowRight className="ml-2" />
                         </Link>
                     </Button>
@@ -115,5 +102,3 @@ export default function LandingPage() {
         </div>
     );
 }
-
-    
