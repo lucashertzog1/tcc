@@ -1,87 +1,40 @@
-
 'use client';
-
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import React, { useState } from 'react';
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const { toast } = useToast();
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const [msg, setMsg] = useState('');
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setIsLoading(true);
-
-    // Simular uma chamada de API
-    setTimeout(() => {
-      toast({
-        title: 'Conta criada com sucesso!',
-        description: 'Bem-vindo ao Speakids!',
-      });
-      router.push('/dashboard');
-    }, 1000);
-  };
+    const res = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, login, password }),
+    });
+    if (res.ok) {
+      window.location.href = '/login';
+    } else {
+      const data = await res.json().catch(()=>({ error: 'Erro' }));
+      setMsg(data?.error || 'Erro ao registrar');
+    }
+  }
 
   return (
-    <div className="flex min-h-[calc(100vh-80px)] items-center justify-center py-12">
-      <Card className="w-full max-w-md bg-white/80 backdrop-blur-sm border-2 border-white/50">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold font-headline">Crie Sua Conta Grátis</CardTitle>
-          <CardDescription>Comece sua jornada de aprendizado hoje mesmo!</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
-             <div className="space-y-2">
-              <Label htmlFor="name">Nome</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Seu nome"
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="seu@email.com"
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Senha</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Crie uma senha segura"
-                required
-                disabled={isLoading}
-              />
-            </div>
-            <Button type="submit" className="w-full" disabled={isLoading}>
-               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Criar Conta
-            </Button>
-          </form>
-          <p className="mt-6 text-center text-sm text-muted-foreground">
-            Já tem uma conta?{' '}
-            <Link href="/login" className="font-semibold text-primary hover:underline">
-              Faça login
-            </Link>
-          </p>
-        </CardContent>
-      </Card>
+    <div style={{ fontFamily: 'Poppins, sans-serif', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}>
+      <div style={{ background: '#fff', padding: 40, borderRadius: 16, boxShadow: '0 8px 25px rgba(0,0,0,0.2)', width: 320, textAlign: 'center' }}>
+        <form onSubmit={handleSubmit}>
+          <h2 style={{ marginBottom: 20, color: '#6a00f4' }}>Criar Conta</h2>
+          <input value={email} onChange={(e)=>setEmail(e.target.value)} name="email" placeholder="Email" required style={{ width:'100%', padding:10, margin:'8px 0', border:'1px solid #ddd', borderRadius:8, fontSize:14 }} />
+          <input value={login} onChange={(e)=>setLogin(e.target.value)} name="login" placeholder="Login" required style={{ width:'100%', padding:10, margin:'8px 0', border:'1px solid #ddd', borderRadius:8, fontSize:14 }} />
+          <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} name="password" placeholder="Senha" required style={{ width:'100%', padding:10, margin:'8px 0', border:'1px solid #ddd', borderRadius:8, fontSize:14 }} />
+          <button type="submit" style={{ width:'100%', padding:10, marginTop:15, background:'#6a00f4', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:'bold' }}>Registrar</button>
+          <a href="/login" style={{ display:'block', marginTop:15, color:'#6a00f4', textDecoration:'none' }}>Voltar ao Login</a>
+          {msg && <p style={{ color: 'red', marginTop: 12 }}>{msg}</p>}
+        </form>
+      </div>
     </div>
   );
 }
