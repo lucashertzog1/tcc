@@ -87,5 +87,6 @@ npm run lint    # Executa verificação de código (lint)
 =========================================================
 
 👨‍💻 AUTORES
+
 Projeto desenvolvido por Lucas Hertzog e João Bonotto.
 
