@@ -13,10 +13,14 @@ export default function LoginPage() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
     });
-    if (res.ok) {
+
+    const data = await res.json().catch(() => ({}));
+
+    if (res.ok && data.user) {
+      // salva usuário no localStorage
+      localStorage.setItem('user', JSON.stringify(data.user));
       window.location.href = '/dashboard';
     } else {
-      const data = await res.json().catch(()=>({ error: 'Erro' }));
       setMsg(data?.error || 'Credenciais inválidas');
     }
   }
@@ -26,7 +30,7 @@ export default function LoginPage() {
       <div style={{ background: '#fff', padding: 40, borderRadius: 16, boxShadow: '0 8px 25px rgba(0,0,0,0.2)', width: 320, textAlign: 'center' }}>
         <form onSubmit={handleSubmit}>
           <h2 style={{ marginBottom: 20, color: '#6a00f4' }}>Login</h2>
-          <input value={email} onChange={(e)=>setEmail(e.target.value)} name="email" placeholder="Email" required style={{ width:'100%', padding:10, margin:'8px 0', border:'1px solid #ddd', borderRadius:8, fontSize:14, outline:'none' }} />
+          <input value={email} onChange={(e)=>setEmail(e.target.value)} name="email" placeholder="Email" required style={{ width:'100%', padding:10, margin:'8px 0', border:'1px solid #ddd', borderRadius:8, fontSize:14 }} />
           <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} name="password" placeholder="Senha" required style={{ width:'100%', padding:10, margin:'8px 0', border:'1px solid #ddd', borderRadius:8, fontSize:14 }} />
           <button type="submit" style={{ width:'100%', padding:10, marginTop:15, background:'#6a00f4', color:'#fff', border:'none', borderRadius:8, cursor:'pointer', fontWeight:'bold' }}>Entrar</button>
           <a href="/register" style={{ display:'block', marginTop:15, color:'#6a00f4', textDecoration:'none' }}>Criar conta</a>

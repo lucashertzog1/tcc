@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Book, CalendarCheck, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const activities = [
   { title: 'Atividades Diárias', href: '/daily-activity', icon: CalendarCheck, description: 'Novos desafios todos os dias!' },
@@ -12,19 +13,30 @@ const activities = [
 
 export default function DashboardPage() {
   const router = useRouter();
+  const [user, setUser] = useState<{ login: string } | null>(null);
 
+  useEffect(() => {
+    const saved = localStorage.getItem('user');
+    if (saved) {
+      setUser(JSON.parse(saved));
+    } else {
+      router.push('/login'); // se não estiver logado
+    }
+  }, [router]);
 
   const handleLogout = () => {
-    localStorage.removeItem('user'); 
+    localStorage.removeItem('user');
     sessionStorage.removeItem('user');
-    router.push('/login'); 
+    router.push('/login');
   };
 
   return (
     <div className="flex flex-col gap-12 md:gap-16 pb-24 pt-8 min-h-screen relative">
       {/* Cabeçalho */}
       <section className="text-center">
-        <h1 className="text-3xl md:text-4xl font-bold font-headline text-white drop-shadow-lg">Olá!</h1>
+        <h1 className="text-3xl md:text-4xl font-bold font-headline text-white drop-shadow-lg">
+          {user ? `Olá, ${user.login}!` : 'Olá!'}
+        </h1>
         <p className="text-white/90 drop-shadow-md">
           Pronto para aprender e se divertir hoje?
         </p>
